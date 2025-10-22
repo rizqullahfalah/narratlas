@@ -17,7 +17,7 @@ export default class SavedPage {
 				<p class="page-desc">
           Ini adalah halaman yang menampilkan <strong>cerita yang sudah kamu simpan</strong>.  
           Kamu bisa mencari, mengurutkan, atau menghapus cerita dari daftar ini.  
-          <br>
+          <br><br>
           <strong>Setiap daftar cerita tersimpan bersifat pribadi dan hanya akan muncul sesuai akun yang sedang login dan browser yang sama.</strong>  
           Jika kamu masuk dengan akun lain atau dengan browser lain, daftar cerita yang tersimpan mungkin berbeda.
           <br><br>
