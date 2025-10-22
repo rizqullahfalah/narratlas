@@ -43,7 +43,7 @@ export async function registerServiceWorker() {
     return;
   }
   try {
-    const registration = await navigator.serviceWorker.register('/service-worker.js');
+    const registration = await navigator.serviceWorker.register('./sw.js');
     console.log('[SW] registered:', registration);
     return registration;
   } catch (e) {
