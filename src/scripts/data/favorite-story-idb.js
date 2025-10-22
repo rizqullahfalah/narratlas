@@ -9,7 +9,9 @@ const STORE_NAME = 'stories';
 const dbPromise = openDB(DB_NAME, DB_VERSION, {
   upgrade(db) {
     if (!db.objectStoreNames.contains(STORE_NAME)) {
-      db.createObjectStore(STORE_NAME, { keyPath: 'id' });
+      const store = db.createObjectStore(STORE_NAME, { keyPath: 'id' });
+      store.createIndex('userId', 'userId', { unique: false });
+      store.createIndex('isSynced', 'isSynced', { unique: false });
     }
   },
 });
@@ -25,7 +27,7 @@ export const FavoriteStoryIdb = {
 
   async getPendingStories() {
     const all = await this.getAllStories();
-    return all.filter(s => s.isSynced === false);
+    return all.filter(s => s.isSynced === false || s.isSynced === undefined);
   },
 
   async getStoriesByUser(userId) {
@@ -44,7 +46,7 @@ export const FavoriteStoryIdb = {
       lat: story.lat !== undefined && story.lat !== '' ? Number(story.lat) : null,
       lon: story.lon !== undefined && story.lon !== '' ? Number(story.lon) : null,
       photoUrl: story.photoUrl || '',
-      isSynced: story.isSynced ?? true,
+      isSynced: story.isSynced ?? false, // ✅ revisi penting
     };
 
     return (await dbPromise).put(STORE_NAME, normalizedStory);

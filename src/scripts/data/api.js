@@ -71,17 +71,43 @@ export async function getStoryById(id) {
  * Tambah story baru
  */
 export async function addStory({ description, photoFile, lat, lon }) {
-  const form = new FormData();
-  form.append('description', description);
-  form.append('photo', photoFile);
-  if (typeof lat === 'number') form.append('lat', String(lat));
-  if (typeof lon === 'number') form.append('lon', String(lon));
+  const token = getAccessToken();
+  if (!token) {
+    console.error('[API] Token tidak ditemukan, user belum login.');
+    return { ok: false, status: 401, message: 'Token tidak ditemukan' };
+  }
 
-  return fetchJSON(ENDPOINTS.STORIES, {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${getAccessToken()}` },
-    body: form,
-  });
+  const form = new FormData();
+  form.append('description', description || '');
+
+  // hanya append photo kalau ada file valid
+  if (photoFile instanceof File || photoFile instanceof Blob) {
+    form.append('photo', photoFile, photoFile.name || 'photo.jpg');
+  } else {
+    console.warn('[API] photoFile tidak valid atau hilang saat sync.');
+  }
+
+  // pastikan lat/lon dikonversi ke angka (dan bukan NaN)
+  const latNum = Number(lat);
+  const lonNum = Number(lon);
+  if (!Number.isNaN(latNum) && !Number.isNaN(lonNum)) {
+    form.append('lat', String(latNum));
+    form.append('lon', String(lonNum));
+  }
+
+  try {
+    const res = await fetch(ENDPOINTS.STORIES, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${token}` },
+      body: form,
+    });
+
+    const data = await res.json().catch(() => ({}));
+    return { ok: res.ok, status: res.status, data, message: data?.message };
+  } catch (err) {
+    console.error('[API.addStory] Error:', err);
+    return { ok: false, status: 0, message: err.message };
+  }
 }
 
 /**

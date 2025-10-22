@@ -5,7 +5,7 @@ import * as API from '../data/api.js';
 
 export async function syncPendingStories() {
   const stories = await FavoriteStoryIdb.getAllStories();
-  const pending = stories.filter(s => s.isSynced === false);
+  const pending = stories.filter((s) => s.isSynced === false);
 
   if (pending.length === 0) {
     console.log('[SYNC] Tidak ada cerita pending.');
@@ -13,7 +13,6 @@ export async function syncPendingStories() {
   }
 
   console.log(`[SYNC] Menemukan ${pending.length} cerita pending. Memulai sinkronisasi...`);
-
   const syncedStories = [];
 
   for (const story of pending) {
@@ -21,17 +20,17 @@ export async function syncPendingStories() {
       const res = await API.addStory({
         description: story.description,
         photoFile: story.photoFile,
-        lat: story.lat,
-        lon: story.lon,
+        lat: Number(story.lat),
+        lon: Number(story.lon),
       });
 
-      if (res.ok && res.data) {
+      if (res.ok && (res.data || res.storyId)) {
         const newStory = {
           ...story,
-          id: res.data.id || story.id,
-          photoUrl: res.data.photoUrl || story.photoUrl,
-          lat: res.data.lat ?? story.lat,
-          lon: res.data.lon ?? story.lon,
+          id: res.data?.id || res.storyId || story.id,
+          photoUrl: res.data?.photoUrl || story.photoUrl,
+          lat: res.data?.lat ?? story.lat,
+          lon: res.data?.lon ?? story.lon,
           userId: story.userId || localStorage.getItem('userId') || 'guest',
           isSynced: true,
           syncedAt: new Date().toISOString(),
@@ -47,9 +46,17 @@ export async function syncPendingStories() {
         syncedStories.push(newStory);
       } else {
         console.error(`[SYNC] ❌ Gagal sync cerita ${story.id}: ${res.message || 'Tidak diketahui'}`);
+        await FavoriteStoryIdb.putStory({
+          ...story,
+          lastSyncError: res.message || 'Tidak diketahui',
+        });
       }
     } catch (err) {
       console.error(`[SYNC] ❌ Error saat sync story ${story.id}:`, err);
+      await FavoriteStoryIdb.putStory({
+        ...story,
+        lastSyncError: err.message,
+      });
     }
   }
 

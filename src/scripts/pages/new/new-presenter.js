@@ -32,7 +32,7 @@ export default class NewPresenter {
     try {
       this.view.showStatus('Mengirim...');
 
-      // 📌 Simpan ke IndexedDB jika offline
+      // 📌 Jika offline, simpan dulu ke IndexedDB
       if (!navigator.onLine) {
         const objectUrl = URL.createObjectURL(photo);
         const userId = localStorage.getItem('userId') || 'guest';
@@ -52,7 +52,7 @@ export default class NewPresenter {
 
         await FavoriteStoryIdb.putStory(offlineStory);
 
-        // simpan juga judul lokal
+        // simpan judul lokal
         const localTitles = getLocalTitles();
         localTitles[offlineStory.id] = title;
         saveLocalTitles(localTitles);
@@ -62,7 +62,7 @@ export default class NewPresenter {
         return;
       }
 
-      // 📌 Jika online, langsung kirim ke API
+      // 📌 Jika online, kirim ke API
       const token = getAuthToken();
       if (!token) {
         this.view.showError('Anda harus login dulu sebelum menambah cerita.');
@@ -71,7 +71,7 @@ export default class NewPresenter {
 
       const formData = new FormData();
       formData.append('description', description);
-      if (lat && lon) {
+      if (lat != null && lon != null) {
         formData.append('lat', lat);
         formData.append('lon', lon);
       }
@@ -86,7 +86,7 @@ export default class NewPresenter {
       const data = await response.json();
       if (!response.ok) throw new Error(data.message || 'HTTP ' + response.status);
 
-      // Simpan judul ke local storage untuk cache judul
+      // simpan judul ke localStorage
       const storyId = data?.storyId || Date.now();
       const localTitles = getLocalTitles();
       localTitles[storyId] = title;
