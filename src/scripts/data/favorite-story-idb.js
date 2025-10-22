@@ -23,13 +23,14 @@ export const FavoriteStoryIdb = {
     return (await dbPromise).getAll(STORE_NAME);
   },
 
+  async getPendingStories() {
+    const all = await this.getAllStories();
+    return all.filter(s => s.isSynced === false);
+  },
+
   async getStoriesByUser(userId) {
     const allStories = await this.getAllStories();
     return allStories.filter(story => story.userId === userId);
-  },
-
-  async getAllKeys() {
-    return (await dbPromise).getAllKeys(STORE_NAME);
   },
 
   async putStory(story) {
@@ -38,11 +39,15 @@ export const FavoriteStoryIdb = {
       return;
     }
 
-    if (!story.userId) {
-      console.warn('[IDB] Story disimpan tanpa userId. Sebaiknya tambahkan userId agar data tidak tercampur antar akun.');
-    }
+    const normalizedStory = {
+      ...story,
+      lat: story.lat !== undefined && story.lat !== '' ? Number(story.lat) : null,
+      lon: story.lon !== undefined && story.lon !== '' ? Number(story.lon) : null,
+      photoUrl: story.photoUrl || '',
+      isSynced: story.isSynced ?? true,
+    };
 
-    return (await dbPromise).put(STORE_NAME, story);
+    return (await dbPromise).put(STORE_NAME, normalizedStory);
   },
 
   async deleteStory(id) {

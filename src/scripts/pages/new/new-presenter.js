@@ -35,23 +35,27 @@ export default class NewPresenter {
       // 📌 Simpan ke IndexedDB jika offline
       if (!navigator.onLine) {
         const objectUrl = URL.createObjectURL(photo);
+        const userId = localStorage.getItem('userId') || 'guest';
 
         const offlineStory = {
           id: `offline-${Date.now()}`,
-          title,                       // simpan judul
+          title,
           description,
           photoUrl: objectUrl,
-          photoFile: photo,            // simpan file asli agar bisa di-sync
-          lat: lat || null,
-          lon: lon || null,
+          photoFile: photo,
+          lat: lat ? Number(lat) : null,
+          lon: lon ? Number(lon) : null,
+          userId,
           createdAt: new Date().toISOString(),
           isSynced: false,
         };
 
         await FavoriteStoryIdb.putStory(offlineStory);
 
-        // cleanup blob supaya tidak leak memory
-        URL.revokeObjectURL(objectUrl);
+        // simpan juga judul lokal
+        const localTitles = getLocalTitles();
+        localTitles[offlineStory.id] = title;
+        saveLocalTitles(localTitles);
 
         this.view.showSuccess('Cerita disimpan offline. Akan dikirim saat online.');
         this.view.afterSubmit();

@@ -7,7 +7,13 @@ export async function syncPendingStories() {
   const stories = await FavoriteStoryIdb.getAllStories();
   const pending = stories.filter(s => s.isSynced === false);
 
-  // simpan hasil sukses untuk feedback
+  if (pending.length === 0) {
+    console.log('[SYNC] Tidak ada cerita pending.');
+    return [];
+  }
+
+  console.log(`[SYNC] Menemukan ${pending.length} cerita pending. Memulai sinkronisasi...`);
+
   const syncedStories = [];
 
   for (const story of pending) {
@@ -19,27 +25,36 @@ export async function syncPendingStories() {
         lon: story.lon,
       });
 
-      if (res.ok) {
-        // update IndexedDB, tandai sudah sync
-        await FavoriteStoryIdb.putStory({
+      if (res.ok && res.data) {
+        const newStory = {
           ...story,
+          id: res.data.id || story.id,
+          photoUrl: res.data.photoUrl || story.photoUrl,
+          lat: res.data.lat ?? story.lat,
+          lon: res.data.lon ?? story.lon,
+          userId: story.userId || localStorage.getItem('userId') || 'guest',
           isSynced: true,
           syncedAt: new Date().toISOString(),
-        });
+        };
 
-        // cleanup objectURL kalau ada
+        await FavoriteStoryIdb.putStory(newStory);
+
         if (story.photoUrl?.startsWith('blob:')) {
           URL.revokeObjectURL(story.photoUrl);
         }
 
-        console.log(`✔ Story ${story.id} berhasil disinkronkan.`);
-        syncedStories.push(story);
+        console.log(`[SYNC] ✔ Berhasil sinkronkan cerita: ${newStory.id}`);
+        syncedStories.push(newStory);
       } else {
-        console.error(`❌ Gagal sync story ${story.id}: ${res.message}`);
+        console.error(`[SYNC] ❌ Gagal sync cerita ${story.id}: ${res.message || 'Tidak diketahui'}`);
       }
     } catch (err) {
-      console.error(`❌ Gagal sync story ${story.id}`, err);
+      console.error(`[SYNC] ❌ Error saat sync story ${story.id}:`, err);
     }
+  }
+
+  if (syncedStories.length > 0) {
+    console.log(`[SYNC] Selesai: ${syncedStories.length} cerita berhasil disinkronkan.`);
   }
 
   return syncedStories;
