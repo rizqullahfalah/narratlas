@@ -70,11 +70,15 @@ self.addEventListener('push', (event) => {
       console.error('[SW push] gagal parse payload:', err);
     }
 
+    const BASE_PATH = self.registration.scope.replace(/\/$/, '');
+
     if (!payload.title) payload.title = 'Notifikasi';
     if (!payload.options) payload.options = {};
     if (!payload.options.body) payload.options.body = 'Update baru.';
-    if (!payload.options.icon) payload.options.icon = '/images/logo-192.png';
-    if (!payload.options.badge) payload.options.badge = '/images/logo-192.png';
+    if (!payload.options.icon)
+      payload.options.icon = `${BASE_PATH}/images/logo-192.png`;
+    if (!payload.options.badge)
+      payload.options.badge = `${BASE_PATH}/images/logo-192.png`;
 
     if (payload?.options?.data?.storyId) {
       payload.options.actions = [
