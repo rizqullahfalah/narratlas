@@ -1,2 +1,2 @@
 APP_URL=https://rizqullahfalah.github.io/narratlas
-MAP_SERVICE_API_KEY=<api_key>
+MAP_SERVICE_API_KEY=
