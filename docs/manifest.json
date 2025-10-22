@@ -1,0 +1,132 @@
+{
+  "name": "NarrAtlas Stories",
+  "short_name": "NarrAtlas",
+  "description": "NarrAtlas adalah aplikasi berbagi cerita berbasis peta yang memanfaatkan API Dicoding Story.",
+  "lang": "id",
+  "start_url": "/?source=pwa#/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0ea5e9",
+  "orientation": "portrait",
+
+  "icons": [
+    {
+      "src": "images/logo-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "images/logo-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+
+  "screenshots": [
+    {
+      "src": "images/screenshots/narratlas-home.png",
+      "sizes": "1920x1080",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Halaman Daftar Cerita"
+    },
+    {
+      "src": "images/screenshots/narratlas-map.png",
+      "sizes": "1920x1080",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Halaman Tampilan Map"
+    },
+    {
+      "src": "images/screenshots/narratlas-new.png",
+      "sizes": "1920x1080",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Halaman Tambah Cerita"
+    },
+    {
+      "src": "images/screenshots/narratlas-saved.png",
+      "sizes": "1920x1080",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Halaman Cerita Tersimpan"
+    },
+    {
+      "src": "images/screenshots/narratlas-about.png",
+      "sizes": "1920x1080",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Halaman Tentang Aplikasi"
+    },
+    {
+      "src": "images/screenshots/narratlas-mobile1.png",
+      "sizes": "1080x2280",
+      "type": "image/png",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "images/screenshots/narratlas-mobile2.png",
+      "sizes": "1080x2280",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ],
+
+  "shortcuts": [
+    {
+      "name": "Buat Story",
+      "short_name": "Story Baru",
+      "description": "Tambahkan cerita baru di peta.",
+      "url": "/#/new",
+      "icons": [
+        {
+          "src": "images/logo-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Stories Terbaru",
+      "short_name": "Terbaru",
+      "description": "Lihat daftar cerita terbaru.",
+      "url": "/#/home",
+      "icons": [
+        {
+          "src": "images/logo-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Halaman Tersimpan",
+      "short_name": "Tersimpan",
+      "description": "Lihat cerita yang telah kamu simpan.",
+      "url": "/#/saved",
+      "icons": [
+        {
+          "src": "images/logo-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Tentang NarrAtlas",
+      "short_name": "Tentang",
+      "description": "Lihat informasi tentang pembuat aplikasi.",
+      "url": "/#/about",
+      "icons": [
+        {
+          "src": "images/logo-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ]
+}
