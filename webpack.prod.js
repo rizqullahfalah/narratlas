@@ -30,7 +30,7 @@ module.exports = merge(common, {
     new MiniCssExtractPlugin(),
     new InjectManifest({
       swSrc: path.resolve(__dirname, 'src/scripts/sw.js'),
-      swDest: 'service-worker.js',
+      swDest: 'sw.js',
       maximumFileSizeToCacheInBytes: 5 * 1024 * 1024, // 5 MB
     }),
   ],
