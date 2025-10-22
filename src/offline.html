@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NarrAtlas - Offline</title>
+  <link rel="stylesheet" href="styles/styles.css">
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background: #f4f4f4;
+      margin: 0;
+      text-align: center;
+      color: #333;
+    }
+    .offline-container {
+      max-width: 400px;
+      padding: 20px;
+    }
+    .offline-container img {
+      max-width: 100px;
+      margin-bottom: 20px;
+    }
+    h1 {
+      margin: 0 0 10px;
+    }
+    p {
+      margin: 0 0 20px;
+    }
+    button {
+      background: #0ea5e9;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    button:hover {
+      background: #0284c7;
+    }
+  </style>
+</head>
+<body>
+  <div class="offline-container">
+    <img src="images/logo-192.png" alt="NarrAtlas Logo">
+    <h1>Kamu sedang offline</h1>
+    <p>Jangan khawatir! Kamu masih bisa membuka halaman yang sudah tersimpan.</p>
+    <p>Silakan periksa kembali koneksi internetmu.</p>
+    <button onclick="window.location.reload()">🔄 Coba Lagi</button>
+  </div>
+
+  <script>
+    // Reload otomatis kalau user kembali online
+    window.addEventListener('online', () => {
+      window.location.reload();
+    });
+  </script>
+</body>
+</html>
