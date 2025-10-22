@@ -17,12 +17,9 @@ export default class SavedPage {
 				<p class="page-desc">
           Ini adalah halaman yang menampilkan <strong>cerita yang sudah kamu simpan</strong>.  
           Kamu bisa mencari, mengurutkan, atau menghapus cerita dari daftar ini.  
-          <em style="display: block; margin-top: 4px;">
-            (Catatan: jika cerita memiliki koordinat, maka peta kecil juga akan ditampilkan)
-          </em>
           <br>
-          <strong>Setiap daftar tersimpan bersifat pribadi dan hanya akan muncul sesuai akun yang sedang login.</strong>  
-          Jika kamu masuk dengan akun lain, daftar cerita yang tersimpan mungkin berbeda.
+          <strong>Setiap daftar cerita tersimpan bersifat pribadi dan hanya akan muncul sesuai akun yang sedang login dan browser yang sama.</strong>  
+          Jika kamu masuk dengan akun lain atau dengan browser lain, daftar cerita yang tersimpan mungkin berbeda.
           <br><br>
           Jika ingin membuat cerita baru, silakan klik tombol berikut:
           <a href="#/new" class="btn" style="margin-left: 12px; vertical-align: middle;">Buat Cerita</a>
@@ -43,10 +40,14 @@ export default class SavedPage {
 
   async afterRender() {
     this.#presenter = new SavedPresenter({ view: this });
-    await this.#presenter.showSavedStories();
 
     const searchInput = document.getElementById('search-story');
     const sortSelect = document.getElementById('sort-story');
+
+    await this.#presenter.showSavedStories();
+
+    // Langsung terapkan filter & urutan awal
+    this.#presenter.applyFilter('', sortSelect.value);
 
     searchInput.addEventListener('input', () => {
       this.#presenter.applyFilter(searchInput.value, sortSelect.value);
@@ -93,9 +94,6 @@ export default class SavedPage {
           <div class="story-info">
             <h3>${story.name}</h3>
             <p>${(story.description || '').substring(0, 100)}</p>
-						${story.isSynced === false 
-							? '<small class="pending-label">Belum terkirim (offline)</small>' 
-							: ''}
 
             <div class="story-meta">
               <small class="story-date">${shortDate}</small>

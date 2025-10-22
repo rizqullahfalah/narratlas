@@ -35,7 +35,8 @@ export default class HomePage {
           <h2>Daftar Cerita Terbaru</h2>
           <p class="story-subtitle">
             Untuk melihat lokasi dengan lebih akurat, silakan klik salah satu cerita di bawah ini.  
-            Jika cerita memiliki peta, tampilan akan diarahkan ke titik lokasinya.
+            Jika cerita memiliki peta, tampilan akan diarahkan ke titik lokasinya.<br>
+            <small>⭐ Untuk menyimpan catatanmu, klik tombol "Simpan" pada salah satu cerita.</small>
           </p>
           <div id="story-list" class="story-list" aria-live="polite"></div>
         </section>
