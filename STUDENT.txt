@@ -1,2 +1,12 @@
-APP_URL=http://localhost:9000
+APP_URL=http://127.0.0.1:8080
 MAP_SERVICE_API_KEY=
+
+# Deployment Result
+Deployment URL (GitHub Pages):
+https://rizqullahfalah.github.io/narratlas
+
+Catatan:
+- Platform: GitHub Pages
+- Branch: main
+- Folder: /docs
+- Status: ✅ Online dan dapat diakses publik
