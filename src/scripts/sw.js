@@ -103,12 +103,7 @@ self.addEventListener('notificationclick', (event) => {
         type: 'window',
         includeUncontrolled: true,
       });
-
-      const basePath = new URL(self.registration.scope).pathname.replace(/\/$/, '');
-      const url = storyId
-        ? `${basePath}/#/story/${storyId}`
-        : `${basePath}/#/home`;
-
+      const url = storyId ? `/#/story/${storyId}` : '/#/home';
       const client = allClients.find((c) => c.visibilityState === 'visible');
       if (client) {
         client.navigate(url).then(() => client.focus());
