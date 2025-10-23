@@ -71,6 +71,8 @@ class App {
     });
 
     window.addEventListener('beforeinstallprompt', (e) => {
+      if (this._deferredPrompt) return;
+
       e.preventDefault();
       this._deferredPrompt = e;
 

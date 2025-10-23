@@ -15,15 +15,15 @@ export default class SavedPage {
         <h1>Story Tersimpan</h1>
 
 				<p class="page-desc">
-          Ini adalah halaman yang menampilkan <strong>cerita yang sudah kamu simpan</strong>.  
-          Kamu bisa mencari, mengurutkan, atau menghapus cerita dari daftar ini.  
+          Halaman ini menampilkan <strong>cerita-cerita yang sudah kamu simpan</strong>.  
+          Kamu dapat <strong>mencari</strong>, <strong>mengurutkan</strong>, atau <strong>menghapus</strong> cerita dari daftar ini.  
           <br><br>
-          Di sini kamu bisa mencari cerita bahkan bisa mengurutkannya berdasarkan abjad untuk memudahkan pencarian.  
+          Cerita dapat diurutkan berdasarkan <strong>abjad</strong> untuk memudahkan pencarian dan pengelolaan daftar cerita.  
           <br><br>
-          <strong>Setiap daftar cerita tersimpan bersifat pribadi dan hanya akan muncul sesuai akun yang sedang login dan browser yang sama.</strong>  
-          Jika kamu masuk dengan akun lain atau dengan browser lain, daftar cerita yang tersimpan mungkin berbeda.
+          <strong>Setiap daftar cerita tersimpan bersifat pribadi</strong> dan hanya akan muncul sesuai dengan akun serta browser yang digunakan.  
+          Jika kamu masuk menggunakan akun atau browser lain, daftar cerita yang tersimpan mungkin berbeda.  
           <br><br>
-          Jika ingin membuat cerita baru, silakan klik tombol berikut:
+          Ingin menulis cerita baru? Klik tombol berikut:
           <a href="#/new" class="btn" style="margin-left: 12px; vertical-align: middle;">Buat Cerita</a>
         </p>
 
